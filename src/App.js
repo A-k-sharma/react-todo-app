@@ -1,28 +1,42 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import Login from './components/login';
 import './App.css';
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+    constructor(props) {
+        super(props);
+        this.state={
+            user:"admin",
+            password:"admin",
+            isAuth: false
+        }
+    }
+    handleSubmit = (event, item) => {
+        event.preventDefault();
+        const { user, password } = this.state;
+        if (item.user === user && item.password === password) {
+            this.setState({
+                isAuth: true
+            });
+        } else {
+            this.setState({
+                isAuth: false
+            });
+        }
+    };
+
+    logout=()=>{
+        this.setState({
+            isAuth: false
+        })
+    }
+    render() {
+        return (
+            <div className="App">
+                <Login handleSubmit={this.handleSubmit} isAuth={this.state.isAuth} logout={this.logout}/>
+            </div>
+        );
+    }
 }
 
 export default App;
